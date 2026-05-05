@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عداد الامتحانات — المسار الأكاديمي 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      color: #e2e8f0;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    header h1 {
+      font-size: clamp(1.6rem, 5vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #a78bfa, #60a5fa, #a78bfa);
+      background-size: 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 4s linear infinite;
+    }
+    header p {
+      margin-top: .5rem;
+      color: #94a3b8;
+      font-size: .95rem;
+    }
+    @keyframes shimmer { 0%{background-position:0%} 100%{background-position:200%} }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 1.25rem;
+      padding: 1.75rem 1.5rem;
+      backdrop-filter: blur(12px);
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover { transform: translateY(-4px); }
+
+    /* next card */
+    .card.next {
+      border-color: rgba(167,139,250,.5);
+      box-shadow: 0 0 0 1px rgba(167,139,250,.3), 0 8px 32px rgba(139,92,246,.25);
+    }
+    .card.next::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(139,92,246,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* completed card */
+    .card.done {
+      opacity: .55;
+      border-color: rgba(255,255,255,.06);
+    }
+
+    /* ── Badge row ── */
+    .badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+    .badge {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .25rem .65rem;
+      border-radius: 999px;
+    }
+    .badge.next-badge {
+      background: rgba(139,92,246,.25);
+      color: #c4b5fd;
+      border: 1px solid rgba(139,92,246,.4);
+      animation: pulse-badge 2s ease-in-out infinite;
+    }
+    @keyframes pulse-badge {
+      0%,100% { box-shadow: 0 0 0 0 rgba(139,92,246,.4); }
+      50%      { box-shadow: 0 0 0 6px rgba(139,92,246,0); }
+    }
+    .badge.done-badge {
+      background: rgba(34,197,94,.15);
+      color: #86efac;
+      border: 1px solid rgba(34,197,94,.3);
+    }
+    .badge.upcoming-badge {
+      background: rgba(96,165,250,.12);
+      color: #93c5fd;
+      border: 1px solid rgba(96,165,250,.25);
+    }
+    .exam-num {
+      font-size: .75rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* ── Subject ── */
+    .subject {
+      font-size: clamp(1.1rem, 3vw, 1.35rem);
+      font-weight: 700;
+      color: #f1f5f9;
+      text-align: right;
+      margin-bottom: .3rem;
+      line-height: 1.3;
+    }
+    .subject-en {
+      font-size: .78rem;
+      color: #64748b;
+      text-align: right;
+      margin-bottom: 1rem;
+      direction: ltr;
+      text-align: left;
+    }
+
+    /* ── Date row ── */
+    .date-row {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1.25rem;
+      direction: ltr;
+    }
+    .date-icon { font-size: 1rem; }
+    .date-text {
+      font-size: .82rem;
+      color: #94a3b8;
+    }
+    .date-time {
+      margin-right: auto;
+      font-size: .78rem;
+      color: #64748b;
+    }
+
+    /* ── Countdown ── */
+    .countdown {
+      display: flex;
+      gap: .6rem;
+      direction: ltr;
+      justify-content: center;
+    }
+    .unit {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .3rem;
+    }
+    .digit {
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: .6rem;
+      width: 100%;
+      padding: .55rem .25rem;
+      text-align: center;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      color: #f1f5f9;
+      letter-spacing: .05em;
+      transition: color .15s;
+    }
+    .card.next .digit { color: #c4b5fd; }
+    .card.done .digit  { color: #64748b; }
+    .label {
+      font-size: .62rem;
+      color: #64748b;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    /* ── Done overlay ── */
+    .done-msg {
+      text-align: center;
+      font-size: .9rem;
+      color: #86efac;
+      font-weight: 600;
+      margin-top: .5rem;
+      display: none;
+    }
+    .card.done .done-msg { display: block; }
+    .card.done .countdown { display: none; }
+
+    /* ── Duration pill ── */
+    .duration {
+      margin-top: 1.1rem;
+      text-align: center;
+      font-size: .72rem;
+      color: #64748b;
+    }
+    .duration span {
+      background: rgba(255,255,255,.06);
+      border-radius: 999px;
+      padding: .2rem .7rem;
+      border: 1px solid rgba(255,255,255,.07);
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: #334155;
+      font-size: .78rem;
+    }
+
+    @media (max-width: 480px) {
+      .label { font-size: .55rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>عداد الامتحانات 2026</h1>
+  <p>المسار الأكاديمي — جيل 2008 &nbsp;·&nbsp; الساعة 10:00 صباحاً (توقيت الأردن)</p>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<footer>يتم التحديث كل ثانية · التوقيت: Asia/Amman (UTC+3)</footer>
+
+<script>
+  const EXAMS = [
+    {
+      subject:  'التربية الإسلامية',
+      subEn:    'Islamic Education (Specialized)',
+      dateStr:  '2026-06-25T07:00:00Z',
+      day:      'الخميس',
+      duration: 'ساعة ونصف',
+    },
+    {
+      subject:  'اللغة الإنجليزية (متقدم)',
+      subEn:    'Advanced English',
+      dateStr:  '2026-07-06T07:00:00Z',
+      day:      'الإثنين',
+      duration: 'ساعتان',
+    },
+    {
+      subject:  'الكيمياء',
+      subEn:    'Chemistry',
+      dateStr:  '2026-07-11T07:00:00Z',
+      day:      'السبت',
+      duration: 'ساعتان',
+    },
+    {
+      subject:  'العلوم الحياتية',
+      subEn:    'Biology',
+      dateStr:  '2026-07-18T07:00:00Z',
+      day:      'السبت',
+      duration: 'ساعتان',
+    },
+  ];
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function formatLocalDate(isoUtc) {
+    return new Date(isoUtc).toLocaleDateString('ar-JO', {
+      timeZone: 'Asia/Amman',
+      day:   '2-digit',
+      month: 'long',
+      year:  'numeric',
+    });
+  }
+
+  function buildCard(exam, index) {
+    const target = new Date(exam.dateStr).getTime();
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="badge-row">
+        <span class="badge upcoming-badge" id="badge-${index}">قادم</span>
+        <span class="exam-num">امتحان ${index + 1} / ${EXAMS.length}</span>
+      </div>
+      <div class="subject">${exam.subject}</div>
+      <div class="subject-en">${exam.subEn}</div>
+      <div class="date-row">
+        <span class="date-icon">📅</span>
+        <span class="date-text">${exam.day}، ${formatLocalDate(exam.dateStr)}</span>
+        <span class="date-time">10:00 ص</span>
+      </div>
+      <div class="countdown" id="cd-${index}">
+        <div class="unit"><div class="digit" id="d-${index}">--</div><div class="label">أيام</div></div>
+        <div class="unit"><div class="digit" id="h-${index}">--</div><div class="label">ساعات</div></div>
+        <div class="unit"><div class="digit" id="m-${index}">--</div><div class="label">دقائق</div></div>
+        <div class="unit"><div class="digit" id="s-${index}">--</div><div class="label">ثواني</div></div>
+      </div>
+      <div class="done-msg" id="done-${index}">✓ تم الامتحان</div>
+      <div class="duration"><span>⏱ مدة الامتحان: ${exam.duration}</span></div>
+    `;
+    return { card, target };
+  }
+
+  const grid = document.getElementById('grid');
+  const cards = EXAMS.map((exam, i) => {
+    const { card, target } = buildCard(exam, i);
+    grid.appendChild(card);
+    return { card, target };
+  });
+
+  function tick() {
+    const now = Date.now();
+
+    // find the next upcoming exam index
+    let nextIdx = -1;
+    for (let i = 0; i < cards.length; i++) {
+      if (cards[i].target > now) { nextIdx = i; break; }
+    }
+
+    cards.forEach(({ card, target }, i) => {
+      const diff = target - now;
+      const badge = document.getElementById(`badge-${i}`);
+
+      if (diff <= 0) {
+        // completed
+        card.classList.remove('next');
+        card.classList.add('done');
+        badge.className = 'badge done-badge';
+        badge.textContent = '✓ منتهي';
+      } else {
+        card.classList.remove('done');
+        const days  = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        const mins  = Math.floor((diff % 3600000)  / 60000);
+        const secs  = Math.floor((diff % 60000)     / 1000);
+
+        document.getElementById(`d-${i}`).textContent = pad(days);
+        document.getElementById(`h-${i}`).textContent = pad(hours);
+        document.getElementById(`m-${i}`).textContent = pad(mins);
+        document.getElementById(`s-${i}`).textContent = pad(secs);
+
+        if (i === nextIdx) {
+          card.classList.add('next');
+          badge.className = 'badge next-badge';
+          badge.textContent = '▶ التالي';
+        } else {
+          card.classList.remove('next');
+          badge.className = 'badge upcoming-badge';
+          badge.textContent = 'قادم';
+        }
+      }
+    });
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>
+</body>
+</html>
