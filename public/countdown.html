@@ -6,569 +6,533 @@
   <title>زوزو ٢٠٢٦</title>
   <style>
     :root {
-      --bg:       #f5f5f7;
-      --surface:  #ffffff;
-      --text:     #1d1d1f;
-      --secondary:#86868b;
-      --blue:     #0071e3;
-      --blue-h:   #0077ed;
-      --green:    #34c759;
-      --purple:   #af52de;
-      --border:   rgba(0,0,0,.08);
-      --shadow:   0 2px 20px rgba(0,0,0,.08);
-      --shadow-h: 0 8px 40px rgba(0,0,0,.12);
-      --radius:   18px;
+      --blue:   #0071e3;
+      --blue-h: #0077ed;
+      --text:   #1d1d1f;
+      --mid:    #6e6e73;
+      --light:  #f5f5f7;
       --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
               'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    html { scroll-behavior: smooth; }
     body {
       font-family: var(--font);
-      background: var(--bg);
+      background: #fff;
       color: var(--text);
-      min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* ── Nav ── */
+    /* ─── NAV ─── */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(245,245,247,.8);
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      height: 48px;
+      background: rgba(22,22,23,.9);
       backdrop-filter: saturate(180%) blur(20px);
       -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-      height: 52px;
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 2.5rem;
     }
-    nav span {
-      font-size: .88rem;
-      font-weight: 500;
-      color: var(--secondary);
-      letter-spacing: .01em;
+    nav a {
+      font-size: .72rem;
+      color: rgba(255,255,255,.8);
+      text-decoration: none;
+      letter-spacing: .02em;
+      transition: color .2s;
+    }
+    nav a:hover { color: #fff; }
+    nav .apple-logo {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.85);
     }
 
-    /* ── Hero ── */
+    /* ─── HERO ─── */
     .hero {
+      padding: 120px 2rem 100px;
       text-align: center;
-      padding: 80px 2rem 60px;
+      background: #fff;
     }
-    .hero-eyebrow {
-      font-size: .88rem;
+    .hero-chip {
+      display: inline-block;
+      font-size: .78rem;
       font-weight: 600;
       color: var(--blue);
       letter-spacing: .06em;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
     .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-size: clamp(3.5rem, 10vw, 7rem);
       font-weight: 700;
-      letter-spacing: -.03em;
-      line-height: 1.05;
+      letter-spacing: -.04em;
+      line-height: 1;
       color: var(--text);
       margin-bottom: 1.2rem;
     }
-    .hero-sub {
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      color: var(--secondary);
+    .hero p {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--mid);
       font-weight: 400;
-      max-width: 520px;
-      margin: 0 auto;
-      line-height: 1.6;
+      line-height: 1.5;
+      letter-spacing: .01em;
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
     }
-
-    /* ── Quote Banner ── */
-    .quote-section {
-      padding: 0 2rem 60px;
-      display: flex;
-      justify-content: center;
-    }
-    .quote-card {
-      background: var(--text);
+    .hero-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--blue);
       color: #fff;
-      border-radius: var(--radius);
-      padding: 2rem 2.5rem;
-      max-width: 680px;
-      width: 100%;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .quote-card::before {
-      content: '\201C';
-      position: absolute;
-      top: -.3rem;
-      right: 1.5rem;
-      font-size: 8rem;
-      color: rgba(255,255,255,.06);
-      font-family: Georgia, serif;
-      line-height: 1;
-      pointer-events: none;
-    }
-    .quote-text {
-      font-size: clamp(1.05rem, 3vw, 1.35rem);
-      font-weight: 500;
-      line-height: 1.55;
-      animation: fadeUp .5s ease;
-    }
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(6px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-    .quote-dots {
-      display: flex;
-      justify-content: center;
-      gap: 5px;
-      margin-top: 1.25rem;
-    }
-    .quote-dots span {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.3);
-      transition: background .3s, transform .3s;
-    }
-    .quote-dots span.active {
-      background: #fff;
-      transform: scale(1.3);
-    }
-
-    /* ── Pomodoro ── */
-    .pomo-section {
-      padding: 0 2rem 80px;
-      display: flex;
-      justify-content: center;
-    }
-    .pomo-card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 2.5rem 2rem;
-      max-width: 440px;
-      width: 100%;
-      box-shadow: var(--shadow);
-      text-align: center;
-    }
-    .pomo-eyebrow {
-      font-size: .78rem;
-      font-weight: 600;
-      color: var(--secondary);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-    /* ring */
-    .pomo-ring {
-      position: relative;
-      width: 180px;
-      height: 180px;
-      margin: 0 auto 1.75rem;
-    }
-    .pomo-ring svg { transform: rotate(-90deg); }
-    .track { fill:none; stroke:#e8e8ed; stroke-width:8; }
-    .prog  {
-      fill:none; stroke:var(--blue); stroke-width:8;
-      stroke-linecap:round;
-      transition: stroke-dashoffset .95s linear;
-    }
-    .pomo-time {
-      position:absolute; inset:0;
-      display:flex; flex-direction:column;
-      align-items:center; justify-content:center;
-    }
-    .pomo-clock {
-      font-size: 2.8rem;
-      font-weight: 700;
-      letter-spacing: -.04em;
-      color: var(--text);
-      font-variant-numeric: tabular-nums;
-      font-feature-settings: 'tnum';
-    }
-    .pomo-status {
-      font-size: .72rem;
-      color: var(--secondary);
-      font-weight: 500;
-      margin-top: .2rem;
-    }
-    /* presets */
-    .pomo-presets {
-      display: flex;
-      gap: .4rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 1.5rem;
-    }
-    .preset-btn {
-      background: #f2f2f7;
-      border: none;
-      color: var(--text);
-      font-size: .82rem;
-      font-weight: 500;
       font-family: var(--font);
-      padding: .4rem .9rem;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: background .15s, color .15s;
-    }
-    .preset-btn:hover  { background: #e5e5ea; }
-    .preset-btn.active { background: var(--blue); color: #fff; }
-    /* controls */
-    .pomo-controls { display:flex; gap:.75rem; justify-content:center; }
-    .pomo-btn {
-      font-family: var(--font);
-      font-size: .9rem;
-      font-weight: 500;
+      font-size: .95rem;
+      font-weight: 400;
       border: none;
       border-radius: 980px;
-      padding: .65rem 1.8rem;
+      padding: .65rem 1.6rem;
       cursor: pointer;
-      transition: opacity .15s, transform .1s;
+      text-decoration: none;
+      display: inline-block;
+      transition: background .2s;
     }
-    .pomo-btn:active { transform: scale(.97); }
-    .btn-start { background: var(--blue); color: #fff; }
-    .btn-start:hover { background: var(--blue-h); }
-    .btn-reset { background: #f2f2f7; color: var(--text); }
-    .btn-reset:hover { background: #e5e5ea; }
-    /* done flash */
-    @keyframes pomoDone { 0%,100%{background:#fff} 50%{background:#f0fff4} }
-    .pomo-card.done { animation: pomoDone .7s ease 3; }
+    .btn-primary:hover { background: var(--blue-h); }
+    .btn-ghost {
+      color: var(--blue);
+      font-size: .95rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+    }
+    .btn-ghost::after { content: '›'; font-size: 1.2rem; }
+    .divider { height: 1px; background: #d2d2d7; max-width: 980px; margin: 0 auto; }
 
-    /* ── Exams Section ── */
-    .exams-section {
-      padding: 0 2rem 40px;
-      max-width: 1080px;
-      margin: 0 auto;
+    /* ─── QUOTE SECTION ─── */
+    .quote-section {
+      background: #000;
+      padding: 100px 2rem;
+      text-align: center;
     }
-    .section-label {
+    .q-eyebrow {
       font-size: .78rem;
       font-weight: 600;
-      color: var(--secondary);
-      letter-spacing: .08em;
+      color: #6e6e73;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      text-align: center;
       margin-bottom: 2rem;
     }
-    .exam-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.25rem;
-    }
-    .exam-card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 1.75rem 1.5rem;
-      box-shadow: var(--shadow);
-      transition: transform .25s ease, box-shadow .25s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .exam-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-h);
-    }
-    .exam-card.is-next {
-      background: var(--text);
-      color: #fff;
-    }
-    .exam-card.is-next .subject   { color: #fff; }
-    .exam-card.is-next .subject-en{ color: rgba(255,255,255,.55); }
-    .exam-card.is-next .date-text { color: rgba(255,255,255,.7); }
-    .exam-card.is-next .date-time { color: rgba(255,255,255,.45); }
-    .exam-card.is-next .digit     { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.15); color:#fff; }
-    .exam-card.is-next .unit-label{ color:rgba(255,255,255,.5); }
-    .exam-card.is-next .duration  { color:rgba(255,255,255,.45); }
-    .exam-card.is-done {
-      opacity: .5;
-    }
-
-    /* badge */
-    .badge-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; }
-    .badge {
-      font-size: .68rem;
+    .q-text {
+      font-size: clamp(1.6rem, 4.5vw, 3rem);
       font-weight: 600;
-      letter-spacing: .05em;
+      color: #f5f5f7;
+      letter-spacing: -.02em;
+      line-height: 1.3;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      min-height: 4rem;
+      animation: fadeUp .5s ease;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .q-dots { display: flex; justify-content: center; gap: 6px; }
+    .q-dots span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #3a3a3c;
+      transition: background .3s, transform .3s;
+    }
+    .q-dots span.on { background: #f5f5f7; transform: scale(1.3); }
+
+    /* ─── POMODORO SECTION ─── */
+    .pomo-section {
+      background: var(--light);
+      padding: 100px 2rem;
+      text-align: center;
+    }
+    .section-eyebrow {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--mid);
+      letter-spacing: .08em;
       text-transform: uppercase;
-      padding: .22rem .65rem;
-      border-radius: 999px;
+      margin-bottom: .75rem;
     }
-    .badge-upcoming { background:#f2f2f7; color:var(--secondary); }
-    .badge-next     { background:rgba(255,255,255,.15); color:#fff; }
-    .badge-done     { background:rgba(52,199,89,.15); color:var(--green); }
-    .exam-num       { font-size:.7rem; color:var(--secondary); font-weight:500; }
-    .exam-card.is-next .exam-num { color:rgba(255,255,255,.4); }
-
-    .subject {
-      font-size: clamp(1rem,2.5vw,1.2rem);
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 700;
-      letter-spacing:-.01em;
-      margin-bottom:.2rem;
+      letter-spacing: -.03em;
+      color: var(--text);
+      margin-bottom: .75rem;
     }
-    .subject-en { font-size:.75rem; color:var(--secondary); direction:ltr; text-align:left; margin-bottom:1rem; }
-    .date-row   { display:flex; align-items:center; gap:.4rem; margin-bottom:1.25rem; direction:ltr; }
-    .date-text  { font-size:.8rem; color:var(--secondary); }
-    .date-time  { margin-right:auto; font-size:.75rem; color:var(--secondary); }
-
-    /* countdown digits */
-    .countdown { display:flex; gap:.5rem; direction:ltr; }
-    .unit { flex:1; display:flex; flex-direction:column; align-items:center; gap:.3rem; }
-    .digit {
-      background: #f2f2f7;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      width:100%; padding:.55rem .2rem;
-      text-align:center;
-      font-size:clamp(1.3rem,3.5vw,1.7rem);
-      font-weight:700;
-      letter-spacing:-.02em;
-      color:var(--text);
+    .section-sub {
+      font-size: 1.1rem;
+      color: var(--mid);
+      margin-bottom: 3rem;
+    }
+    .pomo-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      max-width: 420px;
+      margin: 0 auto;
+      box-shadow: 0 2px 30px rgba(0,0,0,.07);
+    }
+    .pomo-ring {
+      position: relative;
+      width: 200px; height: 200px;
+      margin: 0 auto 2rem;
+    }
+    .pomo-ring svg { transform: rotate(-90deg); }
+    .p-track { fill:none; stroke:#e8e8ed; stroke-width:7; }
+    .p-prog  {
+      fill:none; stroke:var(--blue); stroke-width:7;
+      stroke-linecap:round;
+      transition: stroke-dashoffset 1s linear;
+    }
+    .pomo-inner {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .pomo-time-display {
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -.05em;
+      color: var(--text);
       font-variant-numeric: tabular-nums;
     }
-    .unit-label { font-size:.58rem; color:var(--secondary); font-weight:500; text-transform:uppercase; letter-spacing:.04em; }
-    .done-msg   { text-align:center; font-size:.85rem; color:var(--green); font-weight:600; margin-top:.5rem; display:none; }
-    .exam-card.is-done .done-msg    { display:block; }
-    .exam-card.is-done .countdown   { display:none; }
-    .duration   { margin-top:1rem; text-align:center; font-size:.7rem; color:var(--secondary); }
-
-    /* ── Footer ── */
-    footer {
-      text-align:center;
-      padding:3rem 2rem 4rem;
-      font-size:.78rem;
-      color:#c7c7cc;
+    .pomo-label {
+      font-size: .78rem;
+      color: var(--mid);
+      margin-top: .3rem;
     }
-    footer a { color:#c7c7cc; text-decoration:none; }
+    .presets {
+      display: flex; gap: .5rem;
+      justify-content: center; flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+    .p-btn {
+      background: var(--light);
+      border: none;
+      font-family: var(--font);
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--text);
+      padding: .38rem .95rem;
+      border-radius: 980px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .p-btn:hover { background: #e8e8ed; }
+    .p-btn.on { background: var(--text); color: #fff; }
+    .pomo-ctrl { display: flex; gap: .75rem; justify-content: center; }
+    .ctrl-btn {
+      font-family: var(--font);
+      font-size: .9rem;
+      font-weight: 400;
+      border: none;
+      border-radius: 980px;
+      padding: .6rem 1.75rem;
+      cursor: pointer;
+      transition: opacity .15s, background .15s;
+    }
+    .ctrl-btn:active { opacity: .75; }
+    .ctrl-start { background: var(--blue); color: #fff; }
+    .ctrl-start:hover { background: var(--blue-h); }
+    .ctrl-reset { background: #e8e8ed; color: var(--text); }
+    .ctrl-reset:hover { background: #d2d2d7; }
+    @keyframes doneFlash { 0%,100%{background:#fff} 50%{background:#f0f9ff} }
+    .pomo-card.done { animation: doneFlash .7s ease 3; }
 
-    @media(max-width:500px){ .unit-label{font-size:.5rem;} .hero h1{letter-spacing:-.02em;} }
+    /* ─── EXAMS SECTION ─── */
+    .exams-section {
+      background: #fff;
+      padding: 100px 2rem;
+    }
+    .exams-section .section-eyebrow { text-align: center; }
+    .exams-section .section-title   { text-align: center; margin-bottom: .75rem; }
+    .exams-section .section-sub     { text-align: center; margin-bottom: 3.5rem; }
+    .exam-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1px;
+      background: #d2d2d7;
+      max-width: 980px;
+      margin: 0 auto;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .exam-card {
+      background: #fff;
+      padding: 2rem 1.75rem;
+      transition: background .25s;
+    }
+    .exam-card:hover { background: var(--light); }
+    .exam-card.is-next { background: var(--text); }
+    .exam-card.is-next:hover { background: #2a2a2f; }
+    .exam-card.is-done { background: var(--light); opacity: .55; }
+
+    .e-badge {
+      font-size: .65rem; font-weight: 600;
+      letter-spacing: .07em; text-transform: uppercase;
+      padding: .2rem .6rem; border-radius: 980px;
+      margin-bottom: 1.25rem; display: inline-block;
+    }
+    .b-upcoming { background: #e8e8ed; color: var(--mid); }
+    .b-next     { background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+    .b-done     { background: rgba(52,199,89,.15); color: #1a9e3f; }
+    .exam-card.is-next .b-done { color: #4ade80; }
+
+    .e-subject { font-size: 1.15rem; font-weight: 700; letter-spacing: -.01em; margin-bottom: .2rem; }
+    .e-sub-en  { font-size: .72rem; color: var(--mid); direction: ltr; text-align: left; margin-bottom: 1rem; }
+    .exam-card.is-next .e-subject { color: #f5f5f7; }
+    .exam-card.is-next .e-sub-en  { color: #6e6e73; }
+
+    .e-date { font-size: .78rem; color: var(--mid); margin-bottom: 1.25rem; direction: ltr; text-align: left; }
+    .exam-card.is-next .e-date { color: #6e6e73; }
+
+    .cd { display: flex; gap: .4rem; direction: ltr; }
+    .cu { flex: 1; text-align: center; }
+    .cd-digit {
+      display: block;
+      font-size: clamp(1.3rem,3vw,1.6rem);
+      font-weight: 700;
+      letter-spacing: -.03em;
+      color: var(--text);
+      background: var(--light);
+      border-radius: 8px;
+      padding: .45rem .1rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .exam-card.is-next .cd-digit { background: rgba(255,255,255,.1); color: #f5f5f7; }
+    .exam-card.is-done .cd-digit { color: var(--mid); }
+    .cd-lbl { font-size: .55rem; color: var(--mid); text-transform: uppercase;
+              letter-spacing: .04em; margin-top: .3rem; font-weight: 500; }
+    .exam-card.is-next .cd-lbl { color: #6e6e73; }
+
+    .e-done-msg { text-align:center; font-size:.82rem; color:#1a9e3f;
+                  font-weight:600; margin-top:.5rem; display:none; }
+    .exam-card.is-done .e-done-msg { display: block; }
+    .exam-card.is-done .cd { display: none; }
+    .e-duration { margin-top: 1rem; font-size: .7rem; color: var(--mid); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #f5f5f7;
+      border-top: 1px solid #d2d2d7;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    footer p { font-size: .78rem; color: #6e6e73; line-height: 2; }
+    footer strong { color: var(--text); }
   </style>
 </head>
 <body>
 
-<!-- Nav -->
+<!-- NAV -->
 <nav>
-  <span>زوزو · امتحانات ٢٠٢٦</span>
+  <a href="#" class="apple-logo">&#63743;</a>
+  <a href="#pomo">مؤقت التركيز</a>
+  <a href="#exams">الامتحانات</a>
 </nav>
 
-<!-- Hero -->
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-eyebrow">المسار الأكاديمي — جيل ٢٠٠٨</div>
-  <h1>زوزو راح<br>توصل للقمة</h1>
-  <p class="hero-sub">تابعي امتحاناتك وركزي بذكاء. كل ثانية تقربك من حلمك.</p>
-</section>
-
-<!-- Quote Banner -->
-<section class="quote-section">
-  <div class="quote-card">
-    <div class="quote-text" id="quoteText"></div>
-    <div class="quote-dots" id="quoteDots"></div>
+  <div class="hero-chip">المسار الأكاديمي · جيل ٢٠٠٨</div>
+  <h1>زوزو.<br>راح توصل.</h1>
+  <p>كل ثانية تقربك من حلمك. تابعي امتحاناتك وركزي بذكاء.</p>
+  <div class="hero-links">
+    <a href="#exams" class="btn-primary">تابعي الامتحانات</a>
+    <a href="#pomo" class="btn-ghost">مؤقت التركيز</a>
   </div>
 </section>
 
-<!-- Pomodoro -->
-<section class="pomo-section">
-  <div class="pomo-card" id="pomoCard">
-    <div class="pomo-eyebrow">مؤقت التركيز</div>
+<div class="divider"></div>
 
+<!-- QUOTE -->
+<section class="quote-section">
+  <div class="q-eyebrow">كلمات من القلب</div>
+  <div class="q-text" id="qText"></div>
+  <div class="q-dots" id="qDots"></div>
+</section>
+
+<!-- POMODORO -->
+<section class="pomo-section" id="pomo">
+  <div class="section-eyebrow">مؤقت التركيز</div>
+  <div class="section-title">ركزي. أنجزي. إستريحي.</div>
+  <div class="section-sub">اختاري مدة جلسة التركيز وابدئي.</div>
+  <div class="pomo-card" id="pomoCard">
     <div class="pomo-ring">
-      <svg width="180" height="180" viewBox="0 0 180 180">
-        <defs>
-          <linearGradient id="pg" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%"   stop-color="#0071e3"/>
-            <stop offset="100%" stop-color="#34aadc"/>
-          </linearGradient>
-        </defs>
-        <circle class="track" cx="90" cy="90" r="78"/>
-        <circle class="prog"  cx="90" cy="90" r="78" id="pomoProg"
-                stroke="url(#pg)"
-                stroke-dasharray="490" stroke-dashoffset="0"/>
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        <circle class="p-track" cx="100" cy="100" r="88"/>
+        <circle class="p-prog" cx="100" cy="100" r="88" id="pProg"
+                stroke-dasharray="553" stroke-dashoffset="0"/>
       </svg>
-      <div class="pomo-time">
-        <div class="pomo-clock" id="pomoClock">05:00</div>
-        <div class="pomo-status" id="pomoStatus">اختاري المدة</div>
+      <div class="pomo-inner">
+        <div class="pomo-time-display" id="pTime">05:00</div>
+        <div class="pomo-label" id="pLabel">اختاري المدة</div>
       </div>
     </div>
-
-    <div class="pomo-presets">
-      <button class="preset-btn active" data-min="5">٥ د</button>
-      <button class="preset-btn" data-min="10">١٠ د</button>
-      <button class="preset-btn" data-min="15">١٥ د</button>
-      <button class="preset-btn" data-min="30">٣٠ د</button>
-      <button class="preset-btn" data-min="45">٤٥ د</button>
-      <button class="preset-btn" data-min="60">٦٠ د</button>
+    <div class="presets">
+      <button class="p-btn on" data-min="5">٥ د</button>
+      <button class="p-btn" data-min="10">١٠ د</button>
+      <button class="p-btn" data-min="15">١٥ د</button>
+      <button class="p-btn" data-min="30">٣٠ د</button>
+      <button class="p-btn" data-min="45">٤٥ د</button>
+      <button class="p-btn" data-min="60">٦٠ د</button>
     </div>
-
-    <div class="pomo-controls">
-      <button class="pomo-btn btn-start" id="pomoStartBtn" onclick="pomoToggle()">ابدئي</button>
-      <button class="pomo-btn btn-reset" onclick="pomoReset()">إعادة</button>
+    <div class="pomo-ctrl">
+      <button class="ctrl-btn ctrl-start" id="pStartBtn" onclick="pomoToggle()">ابدئي</button>
+      <button class="ctrl-btn ctrl-reset" onclick="pomoReset()">إعادة</button>
     </div>
   </div>
 </section>
 
-<!-- Exams -->
-<section class="exams-section">
-  <div class="section-label">جدول الامتحانات · الساعة ١٠:٠٠ صباحاً</div>
+<!-- EXAMS -->
+<section class="exams-section" id="exams">
+  <div class="section-eyebrow">جدول الامتحانات</div>
+  <div class="section-title">أربعة امتحانات.<br>هدف واحد.</div>
+  <div class="section-sub">الساعة ١٠:٠٠ صباحاً · توقيت الأردن</div>
   <div class="exam-grid" id="examGrid"></div>
 </section>
 
+<div class="divider"></div>
+
+<!-- FOOTER -->
 <footer>
-  يتجدد كل ثانية &nbsp;·&nbsp; توقيت الأردن UTC+3<br><br>
-  💜 نحبك يا زوزو
+  <p><strong>زوزو ٢٠٢٦</strong></p>
+  <p>يتجدد كل ثانية · توقيت الأردن UTC+3</p>
+  <p>💜 نحبك يا زوزو</p>
 </footer>
 
 <script>
-  /* ── Quotes ── */
-  const QUOTES = [
-    'راح تفرحينا يا زوزو بالمعدل العالي 🌟','دكتورة المستقبل زوزو بإذن الله 👩‍⚕️',
-    'راح ترفعين راسنا يا بطلة 🏆','زوزو راح توصل للقمة 🚀','تعبك راح يثمر نجاح 🌸',
-    'راح تكونين فخر لنا كلنا ❤️','زوزو راح تحقق أحلامها ✨','مستقبلك راح يكون مشرق ☀️',
-    'راح نشوفك في أعلى المراتب 🎯','زوزو راح تثبت نفسها 💪','راح تتخرجين بامتياز 🎓',
-    'نجاحك راح يكون حديث الكل 🌺','راح تحققين كل أهدافك 🌈','زوزو راح تبدع أكثر وأكثر 💡',
-    'الأيام الجاية راح تحمل لك إنجازات 🌻','راح تكونين قصة نجاح يحكونها 📖',
-    'زوزو راح تتفوق كعادتها 🥇','راح توصلين لأحلامك خطوة خطوة 👣',
-    'مستقبلك راح يكون مليان نجاح 🎉','زوزو راح تبهر الجميع 🌟',
-    'تعبك راح يظهر بنتائج عظيمة 💎','راح تحققين أعلى الدرجات 📚',
-    'زوزو راح تلمع في سماء النجاح ⭐','راح تكونين قد التحدي دائمًا 🦋',
-    'زوزو راح تصنع الفرق 🌹','الأيام الجاية راح تكون أجمل 🌄',
-    'راح نحتفل فيك قريب يا زوزو 🎊','زوزو راح ترفع سقف الطموح 🏅',
-    'راح نشوف اسمك في القمة ✅','راح نشوفك دكتورة بإذن الله 👩‍🎓',
-    'زوزو راح تفرح قلبنا دائمًا 💜','الأيام الجاية راح تثبت إنك الأفضل 🌠',
-  ];
+/* ── Quotes ── */
+const QUOTES=[
+  'راح تفرحينا يا زوزو بالمعدل العالي 🌟','دكتورة المستقبل زوزو بإذن الله 👩‍⚕️',
+  'راح ترفعين راسنا يا بطلة 🏆','زوزو راح توصل للقمة 🚀','تعبك راح يثمر نجاح 🌸',
+  'راح تكونين فخر لنا كلنا ❤️','زوزو راح تحقق أحلامها ✨','مستقبلك راح يكون مشرق ☀️',
+  'راح نشوفك في أعلى المراتب 🎯','زوزو راح تثبت نفسها 💪','راح تتخرجين بامتياز 🎓',
+  'نجاحك راح يكون حديث الكل 🌺','راح تحققين كل أهدافك 🌈','زوزو راح تبدع أكثر وأكثر 💡',
+  'الأيام الجاية راح تحمل لك إنجازات 🌻','راح تكونين قصة نجاح يحكونها 📖',
+  'زوزو راح تتفوق كعادتها 🥇','راح توصلين لأحلامك خطوة خطوة 👣',
+  'مستقبلك راح يكون مليان نجاح 🎉','زوزو راح تبهر الجميع 🌟',
+  'تعبك راح يظهر بنتائج عظيمة 💎','راح تحققين أعلى الدرجات 📚',
+  'زوزو راح تلمع في سماء النجاح ⭐','راح تكونين قد التحدي دائمًا 🦋',
+  'زوزو راح تصنع الفرق 🌹','الأيام الجاية راح تكون أجمل 🌄',
+  'راح نحتفل فيك قريب يا زوزو 🎊','زوزو راح ترفع سقف الطموح 🏅',
+  'راح نشوف اسمك في القمة ✅','راح نشوفك دكتورة بإذن الله 👩‍🎓',
+  'زوزو راح تفرح قلبنا دائمًا 💜','الأيام الجاية راح تثبت إنك الأفضل 🌠',
+];
+let qi=0;
+const qText=document.getElementById('qText'), qDots=document.getElementById('qDots');
+QUOTES.forEach((_,i)=>{const d=document.createElement('span');if(!i)d.className='on';qDots.appendChild(d);});
+function showQ(i){
+  qText.style.animation='none';qText.offsetHeight;qText.style.animation='';
+  qText.textContent=QUOTES[i];
+  qDots.querySelectorAll('span').forEach((d,j)=>d.className=j===i?'on':'');
+}
+showQ(0); setInterval(()=>{qi=(qi+1)%QUOTES.length;showQ(qi);},4000);
 
-  let qi = 0;
-  const qText = document.getElementById('quoteText');
-  const qDots = document.getElementById('quoteDots');
-  QUOTES.forEach((_, i) => {
-    const d = document.createElement('span');
-    if (!i) d.className = 'active';
-    qDots.appendChild(d);
-  });
-  function showQuote(i) {
-    qText.style.animation = 'none'; qText.offsetHeight; qText.style.animation = '';
-    qText.textContent = QUOTES[i];
-    qDots.querySelectorAll('span').forEach((d,j)=>d.className=j===i?'active':'');
-  }
-  showQuote(0);
-  setInterval(()=>{ qi=(qi+1)%QUOTES.length; showQuote(qi); }, 4000);
+/* ── Exams ── */
+const EXAMS=[
+  {subject:'التربية الإسلامية',subEn:'Islamic Education (Specialized)',dateStr:'2026-06-25T07:00:00Z',day:'الخميس',dur:'ساعة ونصف'},
+  {subject:'اللغة الإنجليزية (متقدم)',subEn:'Advanced English',dateStr:'2026-07-06T07:00:00Z',day:'الإثنين',dur:'ساعتان'},
+  {subject:'الكيمياء',subEn:'Chemistry',dateStr:'2026-07-11T07:00:00Z',day:'السبت',dur:'ساعتان'},
+  {subject:'العلوم الحياتية',subEn:'Biology',dateStr:'2026-07-18T07:00:00Z',day:'السبت',dur:'ساعتان'},
+];
+function pad(n){return String(n).padStart(2,'0');}
+function fmtD(iso){return new Date(iso).toLocaleDateString('ar-JO',{timeZone:'Asia/Amman',day:'2-digit',month:'long',year:'numeric'});}
 
-  /* ── Exams ── */
-  const EXAMS = [
-    { subject:'التربية الإسلامية', subEn:'Islamic Education (Specialized)', dateStr:'2026-06-25T07:00:00Z', day:'الخميس', duration:'ساعة ونصف' },
-    { subject:'اللغة الإنجليزية (متقدم)', subEn:'Advanced English', dateStr:'2026-07-06T07:00:00Z', day:'الإثنين', duration:'ساعتان' },
-    { subject:'الكيمياء', subEn:'Chemistry', dateStr:'2026-07-11T07:00:00Z', day:'السبت', duration:'ساعتان' },
-    { subject:'العلوم الحياتية', subEn:'Biology', dateStr:'2026-07-18T07:00:00Z', day:'السبت', duration:'ساعتان' },
-  ];
+const eg=document.getElementById('examGrid');
+const cards=EXAMS.map((e,i)=>{
+  const c=document.createElement('div');
+  c.className='exam-card';
+  c.innerHTML=`
+    <span class="e-badge b-upcoming" id="b${i}">قادم</span>
+    <div class="e-subject">${e.subject}</div>
+    <div class="e-sub-en">${e.subEn}</div>
+    <div class="e-date">📅 ${e.day}، ${fmtD(e.dateStr)} · ١٠:٠٠ ص</div>
+    <div class="cd" id="cd${i}">
+      <div class="cu"><span class="cd-digit" id="D${i}">--</span><div class="cd-lbl">أيام</div></div>
+      <div class="cu"><span class="cd-digit" id="H${i}">--</span><div class="cd-lbl">ساعات</div></div>
+      <div class="cu"><span class="cd-digit" id="M${i}">--</span><div class="cd-lbl">دقائق</div></div>
+      <div class="cu"><span class="cd-digit" id="S${i}">--</span><div class="cd-lbl">ثواني</div></div>
+    </div>
+    <div class="e-done-msg" id="dn${i}">✓ تم بنجاح</div>
+    <div class="e-duration">⏱ ${e.dur}</div>`;
+  eg.appendChild(c);
+  return {c, t:new Date(e.dateStr).getTime()};
+});
 
-  function pad(n){ return String(n).padStart(2,'0'); }
-  function fmtDate(iso){
-    return new Date(iso).toLocaleDateString('ar-JO',{timeZone:'Asia/Amman',day:'2-digit',month:'long',year:'numeric'});
-  }
-
-  const grid = document.getElementById('examGrid');
-  const cards = EXAMS.map((e,i)=>{
-    const card = document.createElement('div');
-    card.className='exam-card';
-    card.innerHTML=`
-      <div class="badge-row">
-        <span class="badge badge-upcoming" id="badge-${i}">قادم</span>
-        <span class="exam-num">${i+1} / ${EXAMS.length}</span>
-      </div>
-      <div class="subject">${e.subject}</div>
-      <div class="subject-en">${e.subEn}</div>
-      <div class="date-row">
-        <span style="font-size:.85rem">📅</span>
-        <span class="date-text">${e.day}، ${fmtDate(e.dateStr)}</span>
-        <span class="date-time">١٠:٠٠ ص</span>
-      </div>
-      <div class="countdown" id="cd-${i}">
-        <div class="unit"><div class="digit" id="d-${i}">--</div><div class="unit-label">أيام</div></div>
-        <div class="unit"><div class="digit" id="h-${i}">--</div><div class="unit-label">ساعات</div></div>
-        <div class="unit"><div class="digit" id="m-${i}">--</div><div class="unit-label">دقائق</div></div>
-        <div class="unit"><div class="digit" id="s-${i}">--</div><div class="unit-label">ثواني</div></div>
-      </div>
-      <div class="done-msg" id="done-${i}">✓ تم بنجاح</div>
-      <div class="duration">⏱ ${e.duration}</div>`;
-    grid.appendChild(card);
-    return { card, target: new Date(e.dateStr).getTime() };
-  });
-
-  function tick(){
-    const now = Date.now();
-    let nextIdx = cards.findIndex(c=>c.target>now);
-    cards.forEach(({card,target},i)=>{
-      const diff = target-now;
-      const badge = document.getElementById(`badge-${i}`);
-      if(diff<=0){
-        card.className='exam-card is-done';
-        badge.className='badge badge-done'; badge.textContent='✓ منتهي';
-      } else {
-        document.getElementById(`d-${i}`).textContent=pad(Math.floor(diff/86400000));
-        document.getElementById(`h-${i}`).textContent=pad(Math.floor((diff%86400000)/3600000));
-        document.getElementById(`m-${i}`).textContent=pad(Math.floor((diff%3600000)/60000));
-        document.getElementById(`s-${i}`).textContent=pad(Math.floor((diff%60000)/1000));
-        if(i===nextIdx){
-          card.className='exam-card is-next';
-          badge.className='badge badge-next'; badge.textContent='التالي';
-        } else {
-          card.className='exam-card';
-          badge.className='badge badge-upcoming'; badge.textContent='قادم';
-        }
-      }
-    });
-  }
-  tick(); setInterval(tick,1000);
-
-  /* ── Pomodoro ── */
-  const CIRC = 2*Math.PI*78;
-  let pomoTotal=5*60, pomoLeft=5*60, pomoTimer=null, pomoRunning=false;
-  const pomoClock  = document.getElementById('pomoClock');
-  const pomoStatus = document.getElementById('pomoStatus');
-  const pomoProg   = document.getElementById('pomoProg');
-  const pomoBtn    = document.getElementById('pomoStartBtn');
-  const pomoCard   = document.getElementById('pomoCard');
-
-  function pomoRender(){
-    pomoClock.textContent = pad(Math.floor(pomoLeft/60))+':'+pad(pomoLeft%60);
-    pomoProg.style.strokeDashoffset = CIRC*(1-pomoLeft/pomoTotal);
-  }
-  function pomoToggle(){
-    if(pomoRunning){
-      clearInterval(pomoTimer); pomoRunning=false;
-      pomoBtn.textContent='استمري'; pomoStatus.textContent='متوقف مؤقتاً ☕';
+function tick(){
+  const now=Date.now();
+  const nx=cards.findIndex(x=>x.t>now);
+  cards.forEach(({c,t},i)=>{
+    const diff=t-now, b=document.getElementById(`b${i}`);
+    if(diff<=0){
+      c.className='exam-card is-done';
+      b.className='e-badge b-done'; b.textContent='✓ منتهي';
     } else {
-      if(pomoLeft===0) pomoReset();
-      pomoRunning=true; pomoBtn.textContent='إيقاف';
-      pomoStatus.textContent='ركزي يا زوزو 💪';
-      pomoTimer=setInterval(()=>{
-        pomoLeft--;
-        pomoRender();
-        if(pomoLeft<=0){
-          clearInterval(pomoTimer); pomoRunning=false;
-          pomoBtn.textContent='ابدئي'; pomoStatus.textContent='أحسنتِ! استريحي 🌸';
-          pomoCard.classList.add('done');
-          setTimeout(()=>pomoCard.classList.remove('done'),2500);
-        }
-      },1000);
+      document.getElementById(`D${i}`).textContent=pad(Math.floor(diff/86400000));
+      document.getElementById(`H${i}`).textContent=pad(Math.floor((diff%86400000)/3600000));
+      document.getElementById(`M${i}`).textContent=pad(Math.floor((diff%3600000)/60000));
+      document.getElementById(`S${i}`).textContent=pad(Math.floor((diff%60000)/1000));
+      if(i===nx){
+        c.className='exam-card is-next';
+        b.className='e-badge b-next'; b.textContent='التالي';
+      } else {
+        c.className='exam-card';
+        b.className='e-badge b-upcoming'; b.textContent='قادم';
+      }
     }
-  }
-  function pomoReset(){
-    clearInterval(pomoTimer); pomoRunning=false;
-    pomoLeft=pomoTotal; pomoBtn.textContent='ابدئي';
-    pomoStatus.textContent='اختاري المدة'; pomoRender();
-  }
-  document.querySelectorAll('.preset-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      if(pomoRunning) return;
-      document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      pomoTotal=parseInt(btn.dataset.min)*60; pomoLeft=pomoTotal; pomoRender();
-      pomoStatus.textContent='اختاري المدة';
-    });
   });
-  pomoRender();
+}
+tick(); setInterval(tick,1000);
+
+/* ── Pomodoro ── */
+const CIRC=2*Math.PI*88;
+let pTotal=5*60, pLeft=5*60, pTimer=null, pRun=false;
+const pTime=document.getElementById('pTime'), pLbl=document.getElementById('pLabel'),
+      pProg=document.getElementById('pProg'), pBtn=document.getElementById('pStartBtn'),
+      pCard=document.getElementById('pomoCard');
+
+function pRender(){
+  pTime.textContent=pad(Math.floor(pLeft/60))+':'+pad(pLeft%60);
+  pProg.style.strokeDashoffset=CIRC*(1-pLeft/pTotal);
+}
+function pomoToggle(){
+  if(pRun){
+    clearInterval(pTimer);pRun=false;
+    pBtn.textContent='استمري';pLbl.textContent='متوقف مؤقتاً ☕';
+  } else {
+    if(pLeft===0){pLeft=pTotal;pRender();}
+    pRun=true;pBtn.textContent='إيقاف';pLbl.textContent='ركزي يا زوزو 💪';
+    pTimer=setInterval(()=>{
+      pLeft--;pRender();
+      if(pLeft<=0){
+        clearInterval(pTimer);pRun=false;
+        pBtn.textContent='ابدئي';pLbl.textContent='أحسنتِ! 🌸';
+        pCard.classList.add('done');
+        setTimeout(()=>pCard.classList.remove('done'),2500);
+      }
+    },1000);
+  }
+}
+function pomoReset(){
+  clearInterval(pTimer);pRun=false;pLeft=pTotal;
+  pBtn.textContent='ابدئي';pLbl.textContent='اختاري المدة';pRender();
+}
+document.querySelectorAll('.p-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    if(pRun)return;
+    document.querySelectorAll('.p-btn').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    pTotal=parseInt(btn.dataset.min)*60;pLeft=pTotal;pRender();
+    pLbl.textContent='اختاري المدة';
+  });
+});
+pRender();
 </script>
 </body>
 </html>
