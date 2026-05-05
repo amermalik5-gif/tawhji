@@ -3,44 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>عداد الامتحانات — المسار الأكاديمي 2026</title>
+  <title>عداد امتحانات زوزو 2026</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      background: linear-gradient(135deg, #fdf6ff 0%, #e8f4ff 50%, #fff8f0 100%);
       font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-      color: #e2e8f0;
+      color: #1e1b4b;
       padding: 2rem 1rem 4rem;
     }
 
     /* ── Header ── */
     header {
       text-align: center;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
     header h1 {
-      font-size: clamp(1.6rem, 5vw, 2.6rem);
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      background: linear-gradient(90deg, #a78bfa, #60a5fa, #a78bfa);
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 900;
+      background: linear-gradient(90deg, #7c3aed, #db2777, #7c3aed);
       background-size: 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       animation: shimmer 4s linear infinite;
     }
-    header p {
-      margin-top: .5rem;
-      color: #94a3b8;
-      font-size: .95rem;
-    }
     @keyframes shimmer { 0%{background-position:0%} 100%{background-position:200%} }
+
+    /* ── Quote Banner ── */
+    .quote-banner {
+      max-width: 700px;
+      margin: 0 auto 2.5rem;
+      background: linear-gradient(135deg, #7c3aed, #db2777);
+      border-radius: 1.5rem;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(124,58,237,.25);
+      position: relative;
+      overflow: hidden;
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quote-banner::before {
+      content: '✨';
+      position: absolute;
+      font-size: 5rem;
+      opacity: .08;
+      top: -10px;
+      right: 10px;
+    }
+    .quote-text {
+      font-size: clamp(1.1rem, 3.5vw, 1.45rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.5;
+      animation: fadeQuote .6s ease;
+    }
+    @keyframes fadeQuote {
+      from { opacity:0; transform:translateY(8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .quote-dots {
+      display: flex;
+      justify-content: center;
+      gap: .4rem;
+      margin-top: .8rem;
+    }
+    .quote-dots span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.4);
+      display: inline-block;
+      transition: background .3s;
+    }
+    .quote-dots span.active { background: #fff; }
 
     /* ── Grid ── */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1.5rem;
       max-width: 1100px;
       margin: 0 auto;
@@ -48,34 +92,33 @@
 
     /* ── Card ── */
     .card {
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
+      background: #fff;
+      border: 2px solid rgba(124,58,237,.12);
       border-radius: 1.25rem;
       padding: 1.75rem 1.5rem;
-      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(124,58,237,.08);
       transition: transform .2s, box-shadow .2s;
       position: relative;
       overflow: hidden;
     }
-    .card:hover { transform: translateY(-4px); }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(124,58,237,.15); }
 
-    /* next card */
     .card.next {
-      border-color: rgba(167,139,250,.5);
-      box-shadow: 0 0 0 1px rgba(167,139,250,.3), 0 8px 32px rgba(139,92,246,.25);
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124,58,237,.15), 0 8px 32px rgba(124,58,237,.2);
     }
     .card.next::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(139,92,246,.12) 0%, transparent 60%);
+      background: linear-gradient(135deg, rgba(124,58,237,.06) 0%, transparent 60%);
       pointer-events: none;
     }
 
-    /* completed card */
     .card.done {
-      opacity: .55;
-      border-color: rgba(255,255,255,.06);
+      opacity: .6;
+      border-color: rgba(0,0,0,.08);
+      box-shadow: none;
     }
 
     /* ── Badge row ── */
@@ -90,53 +133,50 @@
     .badge {
       font-size: .7rem;
       font-weight: 700;
-      letter-spacing: .08em;
+      letter-spacing: .06em;
       text-transform: uppercase;
-      padding: .25rem .65rem;
+      padding: .25rem .7rem;
       border-radius: 999px;
     }
     .badge.next-badge {
-      background: rgba(139,92,246,.25);
-      color: #c4b5fd;
-      border: 1px solid rgba(139,92,246,.4);
+      background: #7c3aed;
+      color: #fff;
       animation: pulse-badge 2s ease-in-out infinite;
     }
     @keyframes pulse-badge {
-      0%,100% { box-shadow: 0 0 0 0 rgba(139,92,246,.4); }
-      50%      { box-shadow: 0 0 0 6px rgba(139,92,246,0); }
+      0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,.4); }
+      50%      { box-shadow: 0 0 0 7px rgba(124,58,237,0); }
     }
     .badge.done-badge {
-      background: rgba(34,197,94,.15);
-      color: #86efac;
-      border: 1px solid rgba(34,197,94,.3);
+      background: #dcfce7;
+      color: #16a34a;
+      border: 1px solid #86efac;
     }
     .badge.upcoming-badge {
-      background: rgba(96,165,250,.12);
-      color: #93c5fd;
-      border: 1px solid rgba(96,165,250,.25);
+      background: #ede9fe;
+      color: #7c3aed;
+      border: 1px solid #c4b5fd;
     }
     .exam-num {
-      font-size: .75rem;
-      color: #64748b;
+      font-size: .72rem;
+      color: #a1a1aa;
       font-weight: 600;
     }
 
     /* ── Subject ── */
     .subject {
-      font-size: clamp(1.1rem, 3vw, 1.35rem);
-      font-weight: 700;
-      color: #f1f5f9;
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      font-weight: 800;
+      color: #1e1b4b;
       text-align: right;
-      margin-bottom: .3rem;
-      line-height: 1.3;
+      margin-bottom: .25rem;
     }
     .subject-en {
       font-size: .78rem;
-      color: #64748b;
-      text-align: right;
-      margin-bottom: 1rem;
-      direction: ltr;
+      color: #a1a1aa;
       text-align: left;
+      direction: ltr;
+      margin-bottom: 1rem;
     }
 
     /* ── Date row ── */
@@ -147,16 +187,8 @@
       margin-bottom: 1.25rem;
       direction: ltr;
     }
-    .date-icon { font-size: 1rem; }
-    .date-text {
-      font-size: .82rem;
-      color: #94a3b8;
-    }
-    .date-time {
-      margin-right: auto;
-      font-size: .78rem;
-      color: #64748b;
-    }
+    .date-text { font-size: .82rem; color: #6b7280; }
+    .date-time { margin-right: auto; font-size: .78rem; color: #a1a1aa; }
 
     /* ── Countdown ── */
     .countdown {
@@ -173,161 +205,197 @@
       gap: .3rem;
     }
     .digit {
-      background: rgba(0,0,0,.35);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: .6rem;
+      background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+      border: 1.5px solid #c4b5fd;
+      border-radius: .65rem;
       width: 100%;
-      padding: .55rem .25rem;
+      padding: .6rem .25rem;
       text-align: center;
       font-family: 'Courier New', Courier, monospace;
       font-size: clamp(1.4rem, 4vw, 2rem);
-      font-weight: 700;
-      color: #f1f5f9;
-      letter-spacing: .05em;
-      transition: color .15s;
+      font-weight: 800;
+      color: #7c3aed;
     }
-    .card.next .digit { color: #c4b5fd; }
-    .card.done .digit  { color: #64748b; }
+    .card.next .digit {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      border-color: #7c3aed;
+      color: #fff;
+    }
+    .card.done .digit {
+      background: #f4f4f5;
+      border-color: #e4e4e7;
+      color: #a1a1aa;
+    }
     .label {
       font-size: .62rem;
-      color: #64748b;
-      font-weight: 600;
-      letter-spacing: .04em;
+      color: #9ca3af;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: .04em;
     }
 
-    /* ── Done overlay ── */
+    /* ── Done ── */
     .done-msg {
       text-align: center;
       font-size: .9rem;
-      color: #86efac;
-      font-weight: 600;
+      color: #16a34a;
+      font-weight: 700;
       margin-top: .5rem;
       display: none;
     }
     .card.done .done-msg { display: block; }
     .card.done .countdown { display: none; }
 
-    /* ── Duration pill ── */
+    /* ── Duration ── */
     .duration {
       margin-top: 1.1rem;
       text-align: center;
       font-size: .72rem;
-      color: #64748b;
+      color: #9ca3af;
     }
     .duration span {
-      background: rgba(255,255,255,.06);
+      background: #f9fafb;
       border-radius: 999px;
-      padding: .2rem .7rem;
-      border: 1px solid rgba(255,255,255,.07);
+      padding: .2rem .75rem;
+      border: 1px solid #e5e7eb;
     }
 
     /* ── Footer ── */
     footer {
       text-align: center;
       margin-top: 3rem;
-      color: #334155;
-      font-size: .78rem;
+      color: #d1d5db;
+      font-size: .75rem;
     }
 
-    @media (max-width: 480px) {
-      .label { font-size: .55rem; }
-    }
+    @media (max-width: 480px) { .label { font-size: .55rem; } }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>عداد الامتحانات 2026</h1>
-  <p>المسار الأكاديمي — جيل 2008 &nbsp;·&nbsp; الساعة 10:00 صباحاً (توقيت الأردن)</p>
+  <h1>💜 زوزو راح توصل للقمة 💜</h1>
 </header>
+
+<!-- Quote Banner -->
+<div class="quote-banner">
+  <div>
+    <div class="quote-text" id="quote-text"></div>
+    <div class="quote-dots" id="quote-dots"></div>
+  </div>
+</div>
 
 <div class="grid" id="grid"></div>
 
-<footer>يتم التحديث كل ثانية · التوقيت: Asia/Amman (UTC+3)</footer>
+<footer>يتم التحديث كل ثانية · توقيت الأردن (UTC+3)</footer>
 
 <script>
-  const EXAMS = [
-    {
-      subject:  'التربية الإسلامية',
-      subEn:    'Islamic Education (Specialized)',
-      dateStr:  '2026-06-25T07:00:00Z',
-      day:      'الخميس',
-      duration: 'ساعة ونصف',
-    },
-    {
-      subject:  'اللغة الإنجليزية (متقدم)',
-      subEn:    'Advanced English',
-      dateStr:  '2026-07-06T07:00:00Z',
-      day:      'الإثنين',
-      duration: 'ساعتان',
-    },
-    {
-      subject:  'الكيمياء',
-      subEn:    'Chemistry',
-      dateStr:  '2026-07-11T07:00:00Z',
-      day:      'السبت',
-      duration: 'ساعتان',
-    },
-    {
-      subject:  'العلوم الحياتية',
-      subEn:    'Biology',
-      dateStr:  '2026-07-18T07:00:00Z',
-      day:      'السبت',
-      duration: 'ساعتان',
-    },
+  const QUOTES = [
+    'راح تفرحينا يا زوزو بالمعدل العالي 🌟',
+    'دكتورة المستقبل زوزو بإذن الله 👩‍⚕️',
+    'راح ترفعين راسنا يا بطلة 🏆',
+    'زوزو راح توصل للقمة 🚀',
+    'تعبك راح يثمر نجاح 🌸',
+    'راح تكونين فخر لنا كلنا ❤️',
+    'زوزو راح تحقق أحلامها ✨',
+    'مستقبلك راح يكون مشرق ☀️',
+    'راح نشوفك في أعلى المراتب 🎯',
+    'زوزو راح تثبت نفسها 💪',
+    'راح تتخرجين بامتياز 🎓',
+    'نجاحك راح يكون حديث الكل 🌺',
+    'راح تحققين كل أهدافك 🌈',
+    'زوزو راح تبدع أكثر وأكثر 💡',
+    'الأيام الجاية راح تحمل لك إنجازات 🌻',
+    'راح تكونين قصة نجاح يحكونها 📖',
+    'زوزو راح تتفوق كعادتها 🥇',
+    'راح توصلين لأحلامك خطوة خطوة 👣',
+    'مستقبلك راح يكون مليان نجاح 🎉',
+    'زوزو راح تبهر الجميع 🌟',
+    'تعبك راح يظهر بنتائج عظيمة 💎',
+    'راح تحققين أعلى الدرجات 📚',
+    'زوزو راح تلمع في سماء النجاح ⭐',
+    'راح تكونين قد التحدي دائمًا 🦋',
+    'زوزو راح تصنع الفرق 🌹',
+    'الأيام الجاية راح تكون أجمل 🌄',
+    'راح نحتفل فيك قريب يا زوزو 🎊',
+    'زوزو راح ترفع سقف الطموح 🏅',
+    'راح نشوف اسمك في القمة ✅',
+    'راح نشوفك دكتورة بإذن الله 👩‍🎓',
+    'زوزو راح تفرح قلبنا دائمًا 💜',
+    'الأيام الجاية راح تثبت إنك الأفضل 🌠',
   ];
 
-  function pad(n) { return String(n).padStart(2, '0'); }
+  const EXAMS = [
+    { subject:'التربية الإسلامية', subEn:'Islamic Education (Specialized)', dateStr:'2026-06-25T07:00:00Z', day:'الخميس', duration:'ساعة ونصف' },
+    { subject:'اللغة الإنجليزية (متقدم)', subEn:'Advanced English', dateStr:'2026-07-06T07:00:00Z', day:'الإثنين', duration:'ساعتان' },
+    { subject:'الكيمياء', subEn:'Chemistry', dateStr:'2026-07-11T07:00:00Z', day:'السبت', duration:'ساعتان' },
+    { subject:'العلوم الحياتية', subEn:'Biology', dateStr:'2026-07-18T07:00:00Z', day:'السبت', duration:'ساعتان' },
+  ];
 
-  function formatLocalDate(isoUtc) {
-    return new Date(isoUtc).toLocaleDateString('ar-JO', {
-      timeZone: 'Asia/Amman',
-      day:   '2-digit',
-      month: 'long',
-      year:  'numeric',
+  /* ── Quote rotator ── */
+  let qi = 0;
+  const qText = document.getElementById('quote-text');
+  const qDots = document.getElementById('quote-dots');
+
+  QUOTES.forEach((_, i) => {
+    const d = document.createElement('span');
+    if (i === 0) d.className = 'active';
+    qDots.appendChild(d);
+  });
+
+  function showQuote(i) {
+    qText.style.animation = 'none';
+    qText.offsetHeight; // reflow
+    qText.style.animation = '';
+    qText.textContent = QUOTES[i];
+    qDots.querySelectorAll('span').forEach((d, j) => d.className = j === i ? 'active' : '');
+  }
+
+  showQuote(0);
+  setInterval(() => { qi = (qi + 1) % QUOTES.length; showQuote(qi); }, 4000);
+
+  /* ── Helpers ── */
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function formatDate(iso) {
+    return new Date(iso).toLocaleDateString('ar-JO', {
+      timeZone: 'Asia/Amman', day:'2-digit', month:'long', year:'numeric'
     });
   }
 
-  function buildCard(exam, index) {
+  /* ── Build cards ── */
+  const grid = document.getElementById('grid');
+  const cards = EXAMS.map((exam, i) => {
     const target = new Date(exam.dateStr).getTime();
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
       <div class="badge-row">
-        <span class="badge upcoming-badge" id="badge-${index}">قادم</span>
-        <span class="exam-num">امتحان ${index + 1} / ${EXAMS.length}</span>
+        <span class="badge upcoming-badge" id="badge-${i}">قادم</span>
+        <span class="exam-num">امتحان ${i+1} / ${EXAMS.length}</span>
       </div>
       <div class="subject">${exam.subject}</div>
       <div class="subject-en">${exam.subEn}</div>
       <div class="date-row">
-        <span class="date-icon">📅</span>
-        <span class="date-text">${exam.day}، ${formatLocalDate(exam.dateStr)}</span>
+        <span>📅</span>
+        <span class="date-text">${exam.day}، ${formatDate(exam.dateStr)}</span>
         <span class="date-time">10:00 ص</span>
       </div>
-      <div class="countdown" id="cd-${index}">
-        <div class="unit"><div class="digit" id="d-${index}">--</div><div class="label">أيام</div></div>
-        <div class="unit"><div class="digit" id="h-${index}">--</div><div class="label">ساعات</div></div>
-        <div class="unit"><div class="digit" id="m-${index}">--</div><div class="label">دقائق</div></div>
-        <div class="unit"><div class="digit" id="s-${index}">--</div><div class="label">ثواني</div></div>
+      <div class="countdown" id="cd-${i}">
+        <div class="unit"><div class="digit" id="d-${i}">--</div><div class="label">أيام</div></div>
+        <div class="unit"><div class="digit" id="h-${i}">--</div><div class="label">ساعات</div></div>
+        <div class="unit"><div class="digit" id="m-${i}">--</div><div class="label">دقائق</div></div>
+        <div class="unit"><div class="digit" id="s-${i}">--</div><div class="label">ثواني</div></div>
       </div>
-      <div class="done-msg" id="done-${index}">✓ تم الامتحان</div>
+      <div class="done-msg" id="done-${i}">✓ تم الامتحان بنجاح</div>
       <div class="duration"><span>⏱ مدة الامتحان: ${exam.duration}</span></div>
     `;
-    return { card, target };
-  }
-
-  const grid = document.getElementById('grid');
-  const cards = EXAMS.map((exam, i) => {
-    const { card, target } = buildCard(exam, i);
     grid.appendChild(card);
     return { card, target };
   });
 
+  /* ── Tick ── */
   function tick() {
     const now = Date.now();
-
-    // find the next upcoming exam index
     let nextIdx = -1;
     for (let i = 0; i < cards.length; i++) {
       if (cards[i].target > now) { nextIdx = i; break; }
@@ -338,22 +406,16 @@
       const badge = document.getElementById(`badge-${i}`);
 
       if (diff <= 0) {
-        // completed
         card.classList.remove('next');
         card.classList.add('done');
         badge.className = 'badge done-badge';
         badge.textContent = '✓ منتهي';
       } else {
         card.classList.remove('done');
-        const days  = Math.floor(diff / 86400000);
-        const hours = Math.floor((diff % 86400000) / 3600000);
-        const mins  = Math.floor((diff % 3600000)  / 60000);
-        const secs  = Math.floor((diff % 60000)     / 1000);
-
-        document.getElementById(`d-${i}`).textContent = pad(days);
-        document.getElementById(`h-${i}`).textContent = pad(hours);
-        document.getElementById(`m-${i}`).textContent = pad(mins);
-        document.getElementById(`s-${i}`).textContent = pad(secs);
+        document.getElementById(`d-${i}`).textContent = pad(Math.floor(diff/86400000));
+        document.getElementById(`h-${i}`).textContent = pad(Math.floor((diff%86400000)/3600000));
+        document.getElementById(`m-${i}`).textContent = pad(Math.floor((diff%3600000)/60000));
+        document.getElementById(`s-${i}`).textContent = pad(Math.floor((diff%60000)/1000));
 
         if (i === nextIdx) {
           card.classList.add('next');
