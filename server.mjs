@@ -8,6 +8,11 @@ const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(express.static(join(__dirname, 'dist')))
+app.use(express.static(join(__dirname, 'public')))
+
+app.get('/', (_req, res) => {
+  res.sendFile(join(__dirname, 'public', 'countdown.html'))
+})
 
 // ─── Initial data ─────────────────────────────────────────────────────────────
 
