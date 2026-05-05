@@ -269,6 +269,110 @@
     }
 
     @media (max-width: 480px) { .label { font-size: .55rem; } }
+
+    /* ── Pomodoro Section ── */
+    .pomo-wrap {
+      max-width: 480px;
+      margin: 2.5rem auto;
+      background: #fff;
+      border: 2px solid rgba(124,58,237,.15);
+      border-radius: 1.5rem;
+      padding: 2rem 1.75rem;
+      box-shadow: 0 4px 24px rgba(124,58,237,.1);
+      text-align: center;
+    }
+    .pomo-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #7c3aed;
+      margin-bottom: 1.5rem;
+      letter-spacing: .02em;
+    }
+    .pomo-ring {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      margin: 0 auto 1.5rem;
+    }
+    .pomo-ring svg { transform: rotate(-90deg); }
+    .pomo-ring .track  { fill: none; stroke: #ede9fe; stroke-width: 10; }
+    .pomo-ring .prog   { fill: none; stroke: url(#pomoGrad); stroke-width: 10;
+                         stroke-linecap: round; transition: stroke-dashoffset .9s linear; }
+    .pomo-time {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .pomo-clock {
+      font-size: 2.6rem;
+      font-weight: 900;
+      font-family: 'Courier New', monospace;
+      color: #1e1b4b;
+      line-height: 1;
+    }
+    .pomo-mode-label {
+      font-size: .72rem;
+      color: #a1a1aa;
+      margin-top: .3rem;
+      font-weight: 600;
+    }
+    /* preset buttons */
+    .pomo-presets {
+      display: flex;
+      gap: .5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .preset-btn {
+      background: #f5f3ff;
+      border: 1.5px solid #c4b5fd;
+      color: #7c3aed;
+      font-size: .8rem;
+      font-weight: 700;
+      padding: .35rem .8rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background .15s, transform .1s;
+    }
+    .preset-btn:hover   { background: #ede9fe; transform: scale(1.05); }
+    .preset-btn.active  { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+    /* controls */
+    .pomo-controls {
+      display: flex;
+      gap: .75rem;
+      justify-content: center;
+    }
+    .pomo-btn {
+      border: none;
+      border-radius: 999px;
+      font-size: .9rem;
+      font-weight: 700;
+      padding: .6rem 1.6rem;
+      cursor: pointer;
+      transition: transform .1s, box-shadow .15s;
+    }
+    .pomo-btn:active { transform: scale(.96); }
+    .btn-start {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(124,58,237,.3);
+    }
+    .btn-start:hover { box-shadow: 0 6px 20px rgba(124,58,237,.4); }
+    .btn-reset {
+      background: #f4f4f5;
+      color: #6b7280;
+    }
+    .btn-reset:hover { background: #e4e4e7; }
+    /* done flash */
+    @keyframes pomoDone {
+      0%,100% { background: #fff; }
+      50%      { background: #fdf4ff; }
+    }
+    .pomo-wrap.done { animation: pomoDone 0.6s ease 3; }
   </style>
 </head>
 <body>
@@ -286,6 +390,43 @@
 </div>
 
 <div class="grid" id="grid"></div>
+
+<!-- ── Pomodoro Timer ── -->
+<div class="pomo-wrap" id="pomoWrap">
+  <div class="pomo-title">⏱ مؤقت بومودورو</div>
+
+  <div class="pomo-presets">
+    <button class="preset-btn active" data-min="5">5 د</button>
+    <button class="preset-btn" data-min="10">10 د</button>
+    <button class="preset-btn" data-min="15">15 د</button>
+    <button class="preset-btn" data-min="30">30 د</button>
+    <button class="preset-btn" data-min="45">45 د</button>
+    <button class="preset-btn" data-min="60">60 د</button>
+  </div>
+
+  <div class="pomo-ring">
+    <svg width="170" height="170" viewBox="0 0 170 170">
+      <defs>
+        <linearGradient id="pomoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#7c3aed"/>
+          <stop offset="100%" stop-color="#db2777"/>
+        </linearGradient>
+      </defs>
+      <circle class="track" cx="85" cy="85" r="75"/>
+      <circle class="prog"  cx="85" cy="85" r="75" id="pomoProg"
+              stroke-dasharray="471" stroke-dashoffset="0"/>
+    </svg>
+    <div class="pomo-time">
+      <div class="pomo-clock" id="pomoClock">05:00</div>
+      <div class="pomo-mode-label" id="pomoLabel">ابدئي التركيز</div>
+    </div>
+  </div>
+
+  <div class="pomo-controls">
+    <button class="pomo-btn btn-start" id="pomoStartBtn" onclick="pomoToggle()">▶ ابدئي</button>
+    <button class="pomo-btn btn-reset" onclick="pomoReset()">↺ إعادة</button>
+  </div>
+</div>
 
 <footer>يتم التحديث كل ثانية · توقيت الأردن (UTC+3)</footer>
 
@@ -432,6 +573,77 @@
 
   tick();
   setInterval(tick, 1000);
+
+  /* ── Pomodoro ── */
+  const CIRC = 2 * Math.PI * 75; // 471
+  let pomoTotal = 5 * 60;
+  let pomoLeft  = pomoTotal;
+  let pomoTimer = null;
+  let pomoRunning = false;
+
+  const clock    = document.getElementById('pomoClock');
+  const label    = document.getElementById('pomoLabel');
+  const prog     = document.getElementById('pomoProg');
+  const startBtn = document.getElementById('pomoStartBtn');
+  const wrap     = document.getElementById('pomoWrap');
+
+  function pomoRender() {
+    const m = Math.floor(pomoLeft / 60);
+    const s = pomoLeft % 60;
+    clock.textContent = pad(m) + ':' + pad(s);
+    const pct = pomoLeft / pomoTotal;
+    prog.style.strokeDashoffset = CIRC * (1 - pct);
+  }
+
+  function pomoToggle() {
+    if (pomoRunning) {
+      clearInterval(pomoTimer);
+      pomoRunning = false;
+      startBtn.textContent = '▶ استمري';
+      label.textContent = 'متوقف مؤقتاً';
+    } else {
+      if (pomoLeft === 0) pomoReset();
+      pomoRunning = true;
+      startBtn.textContent = '⏸ إيقاف';
+      label.textContent = 'ركزي يا زوزو! 💪';
+      pomoTimer = setInterval(() => {
+        pomoLeft--;
+        pomoRender();
+        if (pomoLeft <= 0) {
+          clearInterval(pomoTimer);
+          pomoRunning = false;
+          startBtn.textContent = '▶ ابدئي';
+          label.textContent = 'أحسنتِ! استريحي 🌸';
+          wrap.classList.add('done');
+          setTimeout(() => wrap.classList.remove('done'), 2000);
+          try { new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAA').play(); } catch(e){}
+        }
+      }, 1000);
+    }
+  }
+
+  function pomoReset() {
+    clearInterval(pomoTimer);
+    pomoRunning = false;
+    pomoLeft = pomoTotal;
+    startBtn.textContent = '▶ ابدئي';
+    label.textContent = 'ابدئي التركيز';
+    pomoRender();
+  }
+
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (pomoRunning) return;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      pomoTotal = parseInt(btn.dataset.min) * 60;
+      pomoLeft  = pomoTotal;
+      pomoRender();
+      label.textContent = 'ابدئي التركيز';
+    });
+  });
+
+  pomoRender();
 </script>
 </body>
 </html>
