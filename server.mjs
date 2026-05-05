@@ -174,7 +174,9 @@ app.put('/api/config', (req, res) => {
 
 // ─── SPA fallback ─────────────────────────────────────────────────────────────
 app.get('/{*path}', (_req, res) => {
-  res.sendFile(join(__dirname, 'dist', 'index.html'))
+  res.sendFile(join(__dirname, 'dist', 'index.html'), err => {
+    if (err) res.status(404).send('App not built yet.')
+  })
 })
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
